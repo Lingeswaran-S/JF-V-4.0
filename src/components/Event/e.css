@@ -1,0 +1,7 @@
+.fixed-content {
+  top: 0;
+  bottom: 0;
+  position: relative;
+  /* overflow-y: scroll; */
+  /* overflow-x: hidden; */
+}
