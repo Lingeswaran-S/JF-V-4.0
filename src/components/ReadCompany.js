@@ -2,7 +2,10 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
+import Box from "@mui/material/Box";
 import CardMedia from "@mui/material/CardMedia";
+import TouchAppTwoToneIcon from "@mui/icons-material/TouchAppTwoTone";
+import CircularProgress from "@mui/material/CircularProgress";
 import CssBaseline from "@mui/material/CssBaseline";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -160,11 +163,18 @@ export default function RecipeReviewCard() {
           {/* <FavoriteIcon /> */}
           {btn_or_test()}
         </IconButton>
-        <IconButton>
-          <Link to="/jobs" class="ml-2" style={{ textDecoration: "none" }}>
-            <Button>Go Back</Button>
-          </Link>
-        </IconButton>
+        {/* <IconButton> */}
+        <Link to="/jobs" class="ml-2" style={{ textDecoration: "none" }}>
+          <Button
+            variant="text"
+            size="large"
+            color="info"
+            sx={{ color: "black", fontWeight: "bold" }}
+          >
+            Go Back
+          </Button>
+        </Link>
+        {/* </IconButton> */}
         {/* <IconButton aria-label="share">
           <ShareIcon />
         </IconButton> */}
@@ -174,7 +184,22 @@ export default function RecipeReviewCard() {
           aria-expanded={expanded}
           aria-label="show more"
         >
-          <ExpandMoreIcon />
+          <Box position="relative" display="inline-flex">
+            <CircularProgress size={28} color="error" />
+            <Box
+              top={0}
+              left={0}
+              bottom={0}
+              right={0}
+              position="absolute"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <ExpandMoreIcon />
+            </Box>
+          </Box>
+          {/* <ExpandMoreIcon /> */}
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
