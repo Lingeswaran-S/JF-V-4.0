@@ -78,13 +78,20 @@ function Home() {
             </Item>
           </Link> */}
 
-          <Link to="/" style={sty}>
+          {/* <Link to="https://lingeswaran.pages.dev/" style={sty}>
             <Item>
               <strong class={themeV ? "text-white" : "text-dark"}>
-                About us !
+                About Me !
               </strong>
             </Item>
-          </Link>
+          </Link> */}
+          <a href="https://lingeswaran.pages.dev/" target="_blank" style={sty}>
+            <Item>
+              <strong class={themeV ? "text-white" : "text-dark"}>
+                About Me !
+              </strong>
+            </Item>
+          </a>
         </Grid>
         <Grid item xs={7}>
           <Item>
@@ -110,7 +117,6 @@ function Home() {
           </Item>
         </Grid>
       </Grid>
-   
     </React.Fragment>
   );
 }
