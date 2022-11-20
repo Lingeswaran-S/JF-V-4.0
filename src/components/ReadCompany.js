@@ -40,14 +40,11 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function RecipeReviewCard() {
-  // --------------
-  const reff = React.useRef(null);
   const location = useLocation();
   const { req } = location.state;
   const name = req.company;
-  const role = req.regLink !== undefined ? req.regLink : "Not";
-  const link = req.Position;
-  // const moreDetails = req.moreDetails;
+  const role = req.Position;
+  const link = req.regLink !== undefined ? req.regLink : "Not";
   let reqList = [];
   function process() {
     for (const key in req) {
