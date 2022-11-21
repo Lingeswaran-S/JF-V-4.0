@@ -109,8 +109,9 @@ function Home() {
                     Welocome
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Thank You For Choosing Job-Ride!
+                    Thank You For Choosing Us!
                   </Typography>
+                  <p class="mt-2">&copy; 2022 Lingeswaran S</p>
                 </CardContent>
               </CardActionArea>
             </Card>

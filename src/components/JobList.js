@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from "axios";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -24,8 +25,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { Button } from "@mui/material";
-import { DataContext } from "../App";
+import { DataContext, Fun } from "../App";
+import Stack from "@mui/material/Stack";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -37,10 +42,26 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function RecipeReviewCard() {
-  let rD = React.useContext(DataContext);
+export default function JobList() {
+  let getAllJobDetails = React.useContext(Fun);
+  let jobs = React.useContext(DataContext);
+  function deleteJob(id) {
+    setLoading(true);
+    axios
+      .delete("https://jserverlinges.herokuapp.com/jobs/" + id)
+      // https://6270ca6c6a36d4d62c1d8729.mockapi.io/crud/sample/Test
+      // "https://6270ca6c6a36d4d62c1d8729.mockapi.io/crud/sample/users"
+      .then((res) => {
+        getAllJobDetails();
+        setLoading(false);
+      })
+      .catch(() => {
+        console.log("erroe while delete");
+        setLoading(false);
+      });
+  }
 
-  let arrayList = rD;
+  let [isNeedLoading, setLoading] = React.useState(false);
 
   return (
     <Card
@@ -80,23 +101,25 @@ export default function RecipeReviewCard() {
             aria-label="simple table"
           >
             <TableBody>
-              {arrayList.map((data, ind) => {
+              {jobs.map((data, ind) => {
                 return (
                   <TableRow
                     //   key={row.name}fontWeight: 'bold'
                     style={
                       ind % 2
                         ? {
-                          background: "#2D142D",
-                        }
-                        : { background: "#00cdac" }
+                            background: "#2D142D",
+                          }
+                        : { background: "rgb(26 5 26)" }
                     }
+                    // 2D142D
+                    // 00cdac
                     sx={{
                       td: { border: 0 },
                     }}
-                  // sx={{
-                  //   "&:last-child td, &:last-child th": { border: 0 },
-                  // }}
+                    // sx={{
+                    //   "&:last-child td, &:last-child th": { border: 0 },
+                    // }}
                   >
                     <TableCell sx={{ fontWeight: "bold" }} align="left">
                       <Link
@@ -106,7 +129,7 @@ export default function RecipeReviewCard() {
                         //   color: "#7a4905",
                         // }}
                         style={{
-                          color: ind % 2 ? "#FFFFFF" : "rgba(184,0,0,1)",
+                          color: ind % 2 ? "#FFFFFF" : "rgb(255 249 0)",
                           textDecoration: "none",
                           textShadow: "0px 1px #ed9a09",
                         }}
@@ -117,8 +140,7 @@ export default function RecipeReviewCard() {
                             req: data,
                             link:
                               data.regLink !== undefined ? data.regLink : "Not",
-                            role: data.Position
-                            
+                            role: data.Position,
                           },
                         }}
                       >
@@ -143,9 +165,10 @@ export default function RecipeReviewCard() {
                           style={
                             ind % 2
                               ? {
-                                color: "#FFFFFF",
-                              }
-                              : { color: "red" }
+                                  color: "#FFFFFF",
+                                }
+                              : { color: "rgb(255 249 0)" ,textShadow: "0px 1px #ed9a09"}
+                              
                           }
                         >
                           {/* <svg
@@ -174,6 +197,22 @@ export default function RecipeReviewCard() {
                         </svg>
                       )}
                     </TableCell>
+                    <Button onClick={() => deleteJob(data.id)}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="50"
+                        fill="red"
+                        class="bi bi-trash"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                        <path
+                          fill-rule="evenodd"
+                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                        />
+                      </svg>
+                    </Button>
                   </TableRow>
                 );
               })}
@@ -181,6 +220,12 @@ export default function RecipeReviewCard() {
           </Table>
         </TableContainer>
       </CardContent>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isNeedLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Card>
   );
 }

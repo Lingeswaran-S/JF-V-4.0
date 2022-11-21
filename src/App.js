@@ -56,12 +56,16 @@ function App() {
   useEffect(() => {
     readData();
   }, []);
+
+  function contextCall(){
+    alert("hi");
+  }
   return (
     <React.Fragment>
       <CurrentThemeValue.Provider value={themeMode}>
         <ThemeValue.Provider value={setTheme}>
           {/* <ThemeProvider theme={darkTheme}> */}
-          <DataContext.Provider value={arrayL}>
+          <DataContext.Provider value={arrayL} >
             <Fun.Provider value={readData}>
               <Routing />
               <Stack spacing={2} sx={{ width: "100%" }}>
