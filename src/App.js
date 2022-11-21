@@ -38,7 +38,7 @@ function App() {
   let [arrayL, setArrayList] = React.useState([]);
   function readData() {
     axios
-      .get("https://6270ca6c6a36d4d62c1d8729.mockapi.io/crud/sample/Test")
+      .get("https://jserverlinges.herokuapp.com/jobs")
       // https://6270ca6c6a36d4d62c1d8729.mockapi.io/crud/sample/Test
       // "https://6270ca6c6a36d4d62c1d8729.mockapi.io/crud/sample/users"
       .then((res) => {
