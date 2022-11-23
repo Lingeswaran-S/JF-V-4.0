@@ -1,36 +1,24 @@
-import * as React from "react";
-import axios from "axios";
-import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CssBaseline from "@mui/material/CssBaseline";
 import PersonSearchSharpIcon from "@mui/icons-material/PersonSearchSharp";
+import { Button } from "@mui/material";
+import Backdrop from "@mui/material/Backdrop";
+import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
+import CardHeader from "@mui/material/CardHeader";
+import CircularProgress from "@mui/material/CircularProgress";
+import CssBaseline from "@mui/material/CssBaseline";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Link, useLocation } from "react-router-dom";
+import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import { Button } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import axios from "axios";
+import * as React from "react";
+import { Link } from "react-router-dom";
 import { DataContext, Fun } from "../App";
-import Stack from "@mui/material/Stack";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -42,7 +30,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function JobList() {
+export default function JobList(props) {
   let getAllJobDetails = React.useContext(Fun);
   let jobs = React.useContext(DataContext);
   function deleteJob(id) {
@@ -134,13 +122,11 @@ export default function JobList() {
                           textShadow: "0px 1px #ed9a09",
                         }}
                         to={{
-                          pathname: "/read",
+                          pathname: "/jobs/"+data.id,
                           state: {
-                            name: data.company,
+                            
                             req: data,
-                            link:
-                              data.regLink !== undefined ? data.regLink : "Not",
-                            role: data.Position,
+    
                           },
                         }}
                       >

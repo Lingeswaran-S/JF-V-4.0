@@ -1,29 +1,32 @@
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Button } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardHeader from "@mui/material/CardHeader";
-import CircularProgress from "@mui/material/CircularProgress";
-import Collapse from "@mui/material/Collapse";
-import { red } from "@mui/material/colors";
-import CssBaseline from "@mui/material/CssBaseline";
-import IconButton from "@mui/material/IconButton";
-import Paper from "@mui/material/Paper";
+import * as React from "react";
 import { styled } from "@mui/material/styles";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import Box from "@mui/material/Box";
+import TouchAppTwoToneIcon from "@mui/icons-material/TouchAppTwoTone";
+import CircularProgress from "@mui/material/CircularProgress";
+import CssBaseline from "@mui/material/CssBaseline";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import { red } from "@mui/material/colors";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Link, useLocation } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import * as React from "react";
-import { Link, useLocation } from "react-router-dom";
-import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
-import Tooltip from "@mui/material/Tooltip";
-import Fade from "@mui/material/Fade";
-import Zoom from "@mui/material/Zoom";
+import Paper from "@mui/material/Paper";
+import { Button } from "@mui/material";
+import { Padding } from "@mui/icons-material";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -35,18 +38,14 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function ReadCompany(props) {
-  const location = useLocation();
-  let req;
-  if (props.jobDetail != undefined) {
-    req = props.jobDetail;
-  } else {
-    req = location.state.req;
-  }
-
-  const name = req.company;
-  const role = req.Position;
-  const link = req.regLink !== undefined ? req.regLink : "Not";
+export default function ReadJob(props) {
+    
+  const req=props.jobDetail;
+  console.log("ReadJob", req);
+  let name = req.company;
+  const role =  req.Position;
+  const link =  req.regLink;
+  console.log("test",req.company);
   let reqList = [];
   function process() {
     for (const key in req) {
@@ -55,6 +54,7 @@ export default function ReadCompany(props) {
       }
     }
   }
+  
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -82,9 +82,6 @@ export default function ReadCompany(props) {
       );
     }
   }
-  function copyToClipBoard() {
-    navigator.clipboard.writeText(document.URL);
-  }
   return (
     <Card
       sx={{
@@ -99,7 +96,7 @@ export default function ReadCompany(props) {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {name != undefined ? name[0] : ""}
+            {name!=undefined?name[0]:""}
           </Avatar>
         }
         title={<strong>{name}</strong>}
@@ -150,63 +147,24 @@ export default function ReadCompany(props) {
           </Table>
         </TableContainer>
       </CardContent>
-
       <CardActions disableSpacing>
-        <IconButton>{btn_or_test()}</IconButton>
-        <Tooltip TransitionComponent={Zoom} title="Copy link"  placement="top">
-        <Button onClick={copyToClipBoard()}>
-          <ContentCopyRoundedIcon sx={{color:"#09ebc1"}} />
-        </Button>
-        </Tooltip>
-        
+        <IconButton>
+          {/* <FavoriteIcon /> */}
+          {btn_or_test()}
+        </IconButton>
+        {/* <IconButton> */}
         <Link to="/jobs" class="ml-2" style={{ textDecoration: "none" }}>
           <Button
             variant="text"
-            size="small"
+            size="large"
             color="info"
             sx={{ color: "black", fontWeight: "bold" }}
           >
             Go Back
           </Button>
         </Link>
-        {req.moreDetails && (
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <Box position="relative" display="inline-flex">
-              <CircularProgress size={28} color="error" />
-              <Box
-                top={0}
-                left={0}
-                bottom={0}
-                right={0}
-                position="absolute"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <ExpandMoreIcon />
-              </Box>
-            </Box>
-            {/* <ExpandMoreIcon /> */}
-          </ExpandMore>
-        )}
+        
       </CardActions>
-
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent
-          style={{
-            backgroundColor: "white",
-            margin: "15px",
-            borderRadius: "3px",
-          }}
-        >
-          <div dangerouslySetInnerHTML={{ __html: req.moreDetails }} />
-        </CardContent>
-      </Collapse>
     </Card>
   );
 }
