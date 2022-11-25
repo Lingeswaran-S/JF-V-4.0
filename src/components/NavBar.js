@@ -18,9 +18,9 @@ import { ThemeValue, UserContext } from "../App";
 
 const pages = [
   { pageName: "Home", pathName: "/", isPath: "true" },
-  { pageName: "Events", pathName: "/eread", isPath: "true" },
+  { pageName: "Jobs", pathName: "/jobs", isPath: "true" },
 
-  { pageName: "About Us !", pathName: "/", isPath: "true" },
+  // { pageName: "About Us !", pathName: "/", isPath: "true" },
   { pageName: "Logout", pathName: "/", isPath: "false", method: "logout" },
 ];
 const pages2 = [{ pageName: "Home", pathName: "/" }];

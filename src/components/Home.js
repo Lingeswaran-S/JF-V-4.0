@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CurrentThemeValue, Fun, ThemeValue, UserContext } from "../App";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
@@ -113,9 +114,9 @@ function Home() {
                 </CardContent>
                 {currentUser.isSuperUser && (
                   <Link to="/uploadJob" style={sty}>
-                    <Item>UploadJob</Item>
+                    <Button variant="contained" sx={{margin:"5px"}}>UploadJob</Button>
                   </Link>
-                )}
+                )} 
               </CardActionArea>
             </Card>
           </Item>
