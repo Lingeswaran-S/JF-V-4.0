@@ -68,7 +68,7 @@ function App() {
     /* global google */
     google.accounts.id.initialize({
       client_id:
-        "608633983795-0nomnle3ssf788a1pn7ha7do7akiud21.apps.googleusercontent.com",
+        "516123002465-amogc5bd9r0ctbm609nfcj1fcroberi1.apps.googleusercontent.com",
       callback: afterGoogleResponse,
     });
     google.accounts.id.renderButton(document.getElementById("signIn"), {
