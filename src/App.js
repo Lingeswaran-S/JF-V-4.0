@@ -3,7 +3,7 @@ import React, { createContext, useEffect } from "react";
 import Routing from "./Routing";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
-
+import jwt_decode, { JwtPayload } from "jwt-decode";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import Backdrop from "@mui/material/Backdrop";
@@ -12,8 +12,14 @@ export const ThemeValue = createContext();
 export const CurrentThemeValue = createContext();
 export const DataContext = createContext();
 export const Fun = createContext();
+export const UserContext = createContext();
+
+
+let preUser="ji";
 
 function App() {
+  let [user, setGoogleUser] = React.useState({});
+  let [isSuperUser, setIsSuperUser] = React.useState(false);
   let [themeMode, setThemeMode] = React.useState(true);
   let [alert, setAlert] = React.useState(false);
   function handleClose() {
@@ -39,8 +45,6 @@ function App() {
   function readData() {
     axios
       .get("https://jserverlinges.herokuapp.com/jobs")
-      // https://6270ca6c6a36d4d62c1d8729.mockapi.io/crud/sample/Test
-      // "https://6270ca6c6a36d4d62c1d8729.mockapi.io/crud/sample/users"
       .then((res) => {
         setArrayList(res.data);
         setAlert(false);
@@ -53,49 +57,60 @@ function App() {
         }, 3000);
       });
   }
+  function afterGoogleResponse(response) {
+    setGoogleUser(jwt_decode(response.credential))
+    if (user.email == "linges0103@gmail.com") {
+      setIsSuperUser(true);
+    }
+  }
   useEffect(() => {
     readData();
-  }, []);
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "608633983795-0nomnle3ssf788a1pn7ha7do7akiud21.apps.googleusercontent.com",
+      callback: afterGoogleResponse,
+    });
+    google.accounts.id.renderButton(document.getElementById("signIn"), {
+      theme: "outline",
+      size: "large",
+    });
+    // google.accounts.id.prompt();
+  }, [user]);
 
-  function contextCall(){
-    alert("hi");
-  }
   return (
     <React.Fragment>
+      
+      {/* <div id="signIn"></div> */}
+     
       <CurrentThemeValue.Provider value={themeMode}>
-        <ThemeValue.Provider value={setTheme}>
-          {/* <ThemeProvider theme={darkTheme}> */}
-          <DataContext.Provider value={arrayL} >
-            <Fun.Provider value={readData}>
-              <Routing />
-              <Stack spacing={2} sx={{ width: "100%" }}>
-                <Snackbar
-                  open={alert}
-                  autoHideDuration={4000}
-                  // onClose={handleClose}
-                >
-                  <Alert
-                    onClose={handleClose}
-                    severity="error"
-                    sx={{ width: "100%" }}
-                  >
-                    Error ! Network connection Wait !
-                  </Alert>
-                </Snackbar>
-              </Stack>
-            </Fun.Provider>
-          </DataContext.Provider>
-          {/* </ThemeProvider> */}
-        </ThemeValue.Provider>
+        <UserContext.Provider value={{user:user,setGoogleUser:setGoogleUser}}>
+          <ThemeValue.Provider value={setTheme}>
+            <DataContext.Provider value={arrayL}>
+              <Fun.Provider value={readData}>
+                <Routing />
+                <Stack spacing={2} sx={{ width: "100%" }}>
+                  <Snackbar open={alert} autoHideDuration={4000}>
+                    <Alert
+                      onClose={handleClose}
+                      severity="error"
+                      sx={{ width: "100%" }}
+                    >
+                      Error ! Network connection Wait !
+                    </Alert>
+                  </Snackbar>
+                </Stack>
+              </Fun.Provider>
+            </DataContext.Provider>
+          </ThemeValue.Provider>
+        </UserContext.Provider>
       </CurrentThemeValue.Provider>
-      {/* -----------Back drop----------- */}
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={alert}
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      {/* ----------end------------------- */}
     </React.Fragment>
   );
 }

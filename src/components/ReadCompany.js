@@ -1,3 +1,4 @@
+import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
@@ -18,12 +19,10 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 import * as React from "react";
 import { Link, useLocation } from "react-router-dom";
-import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
-import Tooltip from "@mui/material/Tooltip";
-import Fade from "@mui/material/Fade";
-import Zoom from "@mui/material/Zoom";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -36,6 +35,7 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function ReadCompany(props) {
+
   const location = useLocation();
   let req;
   if (props.jobDetail != undefined) {

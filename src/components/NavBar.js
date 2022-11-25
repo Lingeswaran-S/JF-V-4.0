@@ -16,12 +16,13 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
-import { ThemeValue } from "../App";
+import { ThemeValue, UserContext } from "../App";
 const pages = [
-  { pageName: "Home", pathName: "/" },
-  { pageName: "Events", pathName: "/eread" },
+  { pageName: "Home", pathName: "/", isPath: "true" },
+  { pageName: "Events", pathName: "/eread", isPath: "true" },
 
-  { pageName: "About Us !", pathName: "/" },
+  { pageName: "About Us !", pathName: "/", isPath: "true" },
+  { pageName: "Logout", pathName: "/", isPath: "false", method: "logout" },
 ];
 const pages2 = [{ pageName: "Home", pathName: "/" }];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -31,6 +32,8 @@ const ResponsiveAppBar = () => {
     window.location.reload();
   }
   let setTheme = React.useContext(ThemeValue);
+  let currentUser = React.useContext(UserContext);
+  console.log(currentUser);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -48,6 +51,9 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  function logoutGoogleUser() {
+    currentUser.setGoogleUser({});
+  }
 
   return (
     <AppBar
@@ -93,23 +99,31 @@ const ResponsiveAppBar = () => {
               }}
               // "linear-gradient(90deg, rgba(51, 156, 255,0.9), rgba(89, 96, 255,0.8) 43%, rgba(215, 19, 230,0.5))"
             >
-              {pages.map((page, ind) => (
-                <Link
-                  to={page.pathName}
-                  style={{
-                    textDecoration: "none",
-                  }}
-                >
-                  <MenuItem key={ind} onClick={handleCloseNavMenu}>
+              {pages.map((page, ind) =>
+                page.isPath === "true" ? (
+                  <Link
+                    to={page.pathName}
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    <MenuItem key={ind} onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">
+                        {page.pageName}
+                      </Typography>
+                    </MenuItem>
+                  </Link>
+                ) : (
+                  <MenuItem key={ind} onClick={logoutGoogleUser}>
                     <Typography textAlign="center">{page.pageName}</Typography>
                   </MenuItem>
-                </Link>
-              ))}
+                )
+              )}
             </Menu>
           </Box>
           {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
-          <TwoWheelerOutlinedIcon />
-          <Typography
+          {/* <TwoWheelerOutlinedIcon /> */}
+          {/* <Typography
             variant="h5"
             noWrap
             component="a"
@@ -127,7 +141,7 @@ const ResponsiveAppBar = () => {
             }}
           >
             Job-Ride
-          </Typography>
+          </Typography> */}
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages2.map((page, ind) => (
@@ -142,6 +156,22 @@ const ResponsiveAppBar = () => {
               </Link>
             ))}
           </Box>
+          
+          {Object.keys(currentUser.user).length != 0 ? (
+            
+            
+            <ButtonGroup
+              disableElevation
+              size="small"
+              variant="text"
+              sx={{ marginRight: "3px" , marginLeft: "3px" }}
+            >
+              <Button sx={{color:"white"}}>{currentUser.user.name}</Button>
+              <Button onClick={logoutGoogleUser}>Logout</Button>
+            </ButtonGroup>
+          ) : (
+            <span id="signIn" class="mr-3"></span>
+          )}
 
           <Box sx={{ flexGrow: 0 }}>
             <ButtonGroup disableElevation size="small" variant="outlined">
@@ -157,45 +187,6 @@ const ResponsiveAppBar = () => {
                 </Button>
               </Tooltip>
             </ButtonGroup>
-
-            {/* <Tooltip title="Refresh Page"> */}
-            {/* <Button onClick={reloadPage}> */}
-            {/* <ReplayIcon /> */}
-            {/* </Button> */}
-            {/* </Tooltip> */}
-            {/* <Tooltip title="Toggle Theme"> */}
-            {/* <IconButton onClick={setTheme} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton> */}
-
-            {/* <Button onClick={setTheme}>Change Theme</Button> */}
-            {/* <Button> */}
-            {/* <LightModeTwoToneIcon onClick={setTheme} /> */}
-            {/* </Button> */}
-            {/* </Tooltip> */}
-
-            {/* <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu> */}
           </Box>
         </Toolbar>
       </Container>

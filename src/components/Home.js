@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { CurrentThemeValue, Fun, ThemeValue } from "../App";
+import { CurrentThemeValue, Fun, ThemeValue, UserContext } from "../App";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
@@ -11,6 +11,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 function Home() {
+  let user = React.useContext(UserContext);
   let sty = {
     textDecoration: "none",
     wordWrap: "break-word",
@@ -64,6 +65,7 @@ function Home() {
               </strong>
             </Item>
           </Link>
+          
 
           {/* <Link to="/qas" style={sty}>
             <Item
@@ -106,7 +108,7 @@ function Home() {
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    Welocome
+                    Hey!{user.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     Thank You For Choosing Us!
