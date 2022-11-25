@@ -59,7 +59,7 @@ function Default(props) {
 
   return (
     <React.Fragment>
-      <form class="form-control form-control-color" onSubmit={postData}>
+      <form class="form-control form-control-color mb-2" onSubmit={postData}>
         <table class="">
           {values.map((ele) => (
             <tr>

@@ -3,9 +3,6 @@ import Default from "./components/UpoladJob/Default";
 import Fields from "./components/UpoladJob/Fields";
 
 function UploadJob() {
-  document.body.style =
-  "background:  #2e2727";
-  // let [point, setPoint] = React.useState(1);
   let [fields, setFields] = React.useState([
     "company",
     "Experience",
@@ -45,7 +42,7 @@ function UploadJob() {
 
   return (
     <React.Fragment>
-      <div class="container">
+      <div class="container pb-3 pt-3" style={{backgroundColor:"#1d2424",borderRadius:"4px"}}>
         <nav class="navbar navbar-light bg-secondary mb-4 mt-3 rounded">
           <strong class="navbar-brand text-white">
             Developed by <a href="https://lingeswaran.pages.dev/" target="_blank" style={{textDecoration:"none",color:"aqua"}}>Lingeswaran S </a>
