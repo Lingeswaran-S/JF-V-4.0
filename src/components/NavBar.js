@@ -1,22 +1,21 @@
-import React, { useContext } from "react";
-import AppBar from "@mui/material/AppBar";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Box from "@mui/material/Box";
-import TwoWheelerOutlinedIcon from "@mui/icons-material/TwoWheelerOutlined";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import LightModeTwoToneIcon from "@mui/icons-material/LightModeTwoTone";
-import Container from "@mui/material/Container";
+import MenuIcon from "@mui/icons-material/Menu";
 import ReplayIcon from "@mui/icons-material/Replay";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import { Link } from "react-router-dom";
+import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import React from "react";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { ThemeValue, UserContext } from "../App";
+
 const pages = [
   { pageName: "Home", pathName: "/", isPath: "true" },
   { pageName: "Events", pathName: "/eread", isPath: "true" },
@@ -51,8 +50,16 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const history = useHistory();
+  const location = useLocation();
+  
   function logoutGoogleUser() {
+    const currentURL = location.pathname;
     currentUser.setGoogleUser({});
+    if (currentURL.includes("/uploadJob")) {
+      history.push("/");
+    }
+    
   }
 
   return (
@@ -156,17 +163,15 @@ const ResponsiveAppBar = () => {
               </Link>
             ))}
           </Box>
-          
+
           {Object.keys(currentUser.user).length != 0 ? (
-            
-            
             <ButtonGroup
               disableElevation
               size="small"
               variant="text"
-              sx={{ marginRight: "3px" , marginLeft: "3px" }}
+              sx={{ marginRight: "3px", marginLeft: "3px" }}
             >
-              <Button sx={{color:"white"}}>{currentUser.user.name}</Button>
+              <Button sx={{ color: "white" }}>{currentUser.user.name}</Button>
               <Button onClick={logoutGoogleUser}>Logout</Button>
             </ButtonGroup>
           ) : (

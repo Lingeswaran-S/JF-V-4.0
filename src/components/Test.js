@@ -14,7 +14,7 @@ function Test() {
   if (location.state != undefined) {
     jobDetailFromPageList = location.state.req;
   }
-  const currentURL = useLocation().pathname;
+  const currentURL = location.pathname;
   
   let jobId;
   if (currentURL.includes("/jobs") || currentURL.includes("/jobs")) {

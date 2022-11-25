@@ -11,7 +11,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 function Home() {
-  let user = React.useContext(UserContext);
+  let currentUser = React.useContext(UserContext);
   let sty = {
     textDecoration: "none",
     wordWrap: "break-word",
@@ -65,7 +65,6 @@ function Home() {
               </strong>
             </Item>
           </Link>
-          
 
           {/* <Link to="/qas" style={sty}>
             <Item
@@ -107,14 +106,16 @@ function Home() {
                   alt="green iguana"
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Hey!{user.name}
-                  </Typography>
                   <Typography variant="body2" color="text.secondary">
                     Thank You For Choosing Us!
                   </Typography>
                   <p class="mt-2">&copy; 2022 Lingeswaran S</p>
                 </CardContent>
+                {currentUser.isSuperUser && (
+                  <Link to="/uploadJob" style={sty}>
+                    <Item>UploadJob</Item>
+                  </Link>
+                )}
               </CardActionArea>
             </Card>
           </Item>

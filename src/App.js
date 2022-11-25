@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { createContext, useEffect } from "react";
 import Routing from "./Routing";
+import UploadJob from "./UploadJob";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import jwt_decode, { JwtPayload } from "jwt-decode";
@@ -14,8 +15,7 @@ export const DataContext = createContext();
 export const Fun = createContext();
 export const UserContext = createContext();
 
-
-let preUser="ji";
+let preUser = "ji";
 
 function App() {
   let [user, setGoogleUser] = React.useState({});
@@ -58,7 +58,7 @@ function App() {
       });
   }
   function afterGoogleResponse(response) {
-    setGoogleUser(jwt_decode(response.credential))
+    setGoogleUser(jwt_decode(response.credential));
     if (user.email == "linges0103@gmail.com") {
       setIsSuperUser(true);
     }
@@ -80,11 +80,16 @@ function App() {
 
   return (
     <React.Fragment>
-      
       {/* <div id="signIn"></div> */}
-     
+
       <CurrentThemeValue.Provider value={themeMode}>
-        <UserContext.Provider value={{user:user,setGoogleUser:setGoogleUser}}>
+        <UserContext.Provider
+          value={{
+            user: user,
+            setGoogleUser: setGoogleUser,
+            isSuperUser: user.email === "linges0103@gmail.com",
+          }}
+        >
           <ThemeValue.Provider value={setTheme}>
             <DataContext.Provider value={arrayL}>
               <Fun.Provider value={readData}>
